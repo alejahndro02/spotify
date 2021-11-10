@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,24 +13,27 @@ mainMenu:{
 } = { defaultOptions:[], accessLink:[] };
 customOptions:Array<any> = [];
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     this.mainMenu.defaultOptions = [
     {
       name:'Home',
       icon:'uil uil-estate',
-      routes:['/']
+      router:['/'],
+      query:{home:'home'}
     },
     {
       name:'Buscar',
       icon:'uil uil-search',
-      routes:['/', 'history']
+      router:['/', 'history'],
+      query:{history:'MiHistorial'}
     },
     {
       name:'Tu Biblioteca',
       icon:'uil uil-chart',
-      routes:['/', 'favorites']
+      router:['/', 'favorites'],
+      query:{favorites:'MisCanciones'}
     }
     ];
     this.mainMenu.accessLink = [
@@ -66,4 +70,15 @@ customOptions:Array<any> = [];
     ]
   }
 
+  //Ese metodo sirve cuando se pasa el metodo atra vez del evento click esta es otra forma de paras los queryParams 
+  goTo($event:any):void{
+    console.log($event);
+    this.router.navigate(['/', 'favorites'],{
+      queryParams:{
+        key1:'favorites-1',
+        key2:'favorites-2',
+        key3:'favorites-3'
+      }
+    })
+  }
 }
