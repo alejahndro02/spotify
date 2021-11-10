@@ -8,7 +8,9 @@ import * as dataRaw from '@data/tracks.json'
   styleUrls: ['./tracks-page.component.css']
 })
 export class TracksPageComponent implements OnInit {
-  mockTracksList:Array<TrackModel> =[]
+  // mockTracksList:Array<TrackModel> =[]
+  mockTracksList:TrackModel[] =[]
+
   constructor() { }
 
   ngOnInit(): void {
