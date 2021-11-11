@@ -107,3 +107,7 @@
 input.ng-invalid.ng-touched {
     border: solid 2px red !important
 }
+
+input.ng-valid.ng-touched {
+    border: solid 2px #347a2e !important
+}
