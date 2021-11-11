@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
+import { MultimediaService } from '@shared/services/multimedia.service';
 
 @Component({
   selector: 'app-media-player',
@@ -14,9 +15,13 @@ mockCover: TrackModel ={
   _id:1,
   url:'http://localhost/track.mp3'
 }
-  constructor() { }
+  constructor(private multimediaService: MultimediaService) { }
 
   ngOnInit(): void {
+    const observerMedia$ = this.multimediaService.callbackMediaPlayer
+    .subscribe((response: TrackModel)=>{
+      console.log('Recibiendo cancion', response.name);
+    })
   }
 
 }
