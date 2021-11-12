@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -30,6 +30,12 @@ export class TrackService {
     return this.http.get(`${this.URL}/tracks`)
     .pipe(
       mergeMap(({data}:any)=>this.skipById(data,2)),
-    );
+      // tap(data => console.log('Error', data)),
+      catchError((err)=>{
+        const {status, statusText} = err
+        console.log('Algo paso Revisame', status, statusText);
+        return of([]);}
+        )
+      );
   }
 }
