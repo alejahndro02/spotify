@@ -1,3 +1,4 @@
+import { TrackService } from './../../../modules/tracks/services/track.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,7 +14,7 @@ mainMenu:{
 } = { defaultOptions:[], accessLink:[] };
 customOptions:Array<any> = [];
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private trackService:TrackService) { }
 
   ngOnInit(): void {
     this.mainMenu.defaultOptions = [
@@ -68,6 +69,15 @@ customOptions:Array<any> = [];
         rouer:['/']
       },
     ]
+
+    //Esto solo es por cuation delejemplo y demostrar que se pueden importar servicios desde otro punto del proyecto
+    this.trackService.dataTracksRandom$.subscribe(response=>{
+      console.log('=====>', response);
+      this.customOptions.push({
+        name:response[0].name,
+        router:[]
+      })
+    })
   }
 
   //Ese metodo sirve cuando se pasa el metodo atra vez del evento click esta es otra forma de paras los queryParams 
