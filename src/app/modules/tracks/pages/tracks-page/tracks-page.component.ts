@@ -12,26 +12,15 @@ import { Subscription } from 'rxjs';
 export class TracksPageComponent implements OnInit, OnDestroy {
   tracksTrending:TrackModel[] = [];
   tracksRandom:TrackModel[] = [];
-  listObserverTrack$:Array<Subscription> = [];
+  listObservers:Array<Subscription> = [];
 
-  constructor(private trackService:TrackService) { }
+  constructor(private trackService:TrackService) { };
 
   ngOnInit(): void {
-    console.log();
-    const ObserverTrackTrending$ = this.trackService.dataTracksTrendind$
-    .subscribe(response=>{
-      this.tracksTrending = response;
-      this.tracksRandom = response;
-      console.log('canciones trending', response);
+    this.trackService.getAllTracks$().subscribe(response =>{
+      console.log('=====>', response);
+      
     })
-    const ObserverTrackRandom$ = this.trackService.dataTracksRandom$
-    .subscribe(response => {
-      this.tracksRandom = [...this.tracksRandom, ...response]
-      console.log('canciones Random', response);
-    })
-    this.listObserverTrack$=[ObserverTrackTrending$, ObserverTrackRandom$ ];
-  }
-ngOnDestroy():void{
-  this.listObserverTrack$.forEach(u => u.unsubscribe());
-}
+  };
+  ngOnDestroy():void{};
 }
