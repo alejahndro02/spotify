@@ -20,16 +20,15 @@ export class TracksPageComponent implements OnInit, OnDestroy {
     this.loadDataRandom();
   };
   ngOnDestroy():void{};
-
-  loadDataAll():void{
-    this.trackService.getAllTracks$()
-    .subscribe((response:TrackModel[]) =>{
-      this.tracksTrending = response;
-    })
+//Obserbable como promesa
+  async loadDataAll():Promise<any>{
+    this.tracksTrending = await this.trackService.getAllTracks$().toPromise();
+    // this.tracksRandom = await this.trackService.getAllRandom$().toPromise();
   }
+  //Observable como subscripcion
   loadDataRandom():void{
     this.trackService.getAllRandom$().subscribe((response:TrackModel[]) =>{
       this.tracksRandom = response;
-    },error=>{})
+    },error=>{console.log('Error de conexion')})
   }
 }
