@@ -4,7 +4,7 @@
         <li [routerLink]="item.router" [queryParams]="item.query" *ngFor="let item of mainMenu.defaultOptions">
             <div class="list-wrapper-item">
                 <i [ngClass]="[item.icon]"></i>
-                <span class="side-bar__list list-label">1{{item.name}}</span>
+                <span class="side-bar__list list-label">{{item.name}}</span>
             </div>
         </li>
     </ul>
@@ -13,7 +13,7 @@
         <li *ngFor="let item of mainMenu.accessLink">
             <div class="list-wrapper-item">
                 <i [ngClass]="[item.icon]"></i>
-                <span class="side-bar__list list-label">2{{item.name}}</span>
+                <span class="side-bar__list list-label">{{item.name}}</span>
             </div>
         </li>
     </ul>
@@ -21,7 +21,7 @@
     <ul class="side-bar__list list-three">
         <li *ngFor="let item of customOptions">
             <div class="list-wrapper-item">
-                <span class="side-bar__list list-label">3{{item.name}}</span>
+                <span class="side-bar__list list-label">{{item.name}}</span>
             </div>
         </li>
     </ul>
