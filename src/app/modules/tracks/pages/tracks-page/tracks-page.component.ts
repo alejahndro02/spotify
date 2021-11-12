@@ -2,7 +2,6 @@ import { TrackService } from './../../services/track.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { Subscription } from 'rxjs';
-//Se asigna todo el valor de la data a la variable data 
 
 @Component({
   selector: 'app-tracks-page',
@@ -17,9 +16,11 @@ export class TracksPageComponent implements OnInit, OnDestroy {
   constructor(private trackService:TrackService) { };
 
   ngOnInit(): void {
-    this.trackService.getAllTracks$().subscribe(response =>{
-      console.log('=====>', response);
-      
+    this.trackService.getAllTracks$().subscribe((response:TrackModel[]) =>{
+      this.tracksTrending = response;
+    })
+    this.trackService.getAllRandom$().subscribe((response:TrackModel[]) =>{
+      this.tracksRandom = response;
     })
   };
   ngOnDestroy():void{};
