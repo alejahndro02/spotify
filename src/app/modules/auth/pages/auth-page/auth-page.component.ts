@@ -9,6 +9,7 @@ import { AuthService } from '@modules/auth/services/auth.service';
 })
 export class AuthPageComponent implements OnInit {
   formLogin: FormGroup = new FormGroup({})
+  msjErrorSesion: Boolean= false
   constructor(private authService: AuthService ) { }
 
   ngOnInit(): void {
@@ -27,7 +28,13 @@ export class AuthPageComponent implements OnInit {
       )
   }
   sendLogin():void{
-    const {email, password} =this.formLogin.value;
-    this.authService.sendCredentials(email, password);
+    const {email, password} = this.formLogin.value;
+    this.authService.sendCredentials(email, password)
+    .subscribe(responseOk =>{
+      console.log('Sesion iniciada Correecta');
+    },error=>{
+      this.msjErrorSesion = true
+      console.log('Ocurrio un error con usuario y/o pasword');
+    });
   }
 }
