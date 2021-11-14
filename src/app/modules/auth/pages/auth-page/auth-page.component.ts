@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@modules/auth/services/auth.service';
@@ -13,7 +14,8 @@ export class AuthPageComponent implements OnInit {
   msjErrorSesion: Boolean= false
   constructor(
     private authService: AuthService,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private router: Router
      ) { }
 
   ngOnInit(): void {
@@ -37,8 +39,7 @@ export class AuthPageComponent implements OnInit {
     .subscribe(responseOk =>{
       const { data,tokenSession } = responseOk;
       this.cookie.set('tokenComponent', tokenSession, 1, '/');//Se guarda la cookie desde el comonete pero tambien se puede desde el servico 
-      console.log('Sesion iniciada Correecta');
-
+      this.router.navigate(['/','tracks'])// Se agrega la redireccion a /tracks en caso de que la contraseña coincida
     },error=>{
       this.msjErrorSesion = true
       console.log('Ocurrio un error con usuario y/o pasword');
