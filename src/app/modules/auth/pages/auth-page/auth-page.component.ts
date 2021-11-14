@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@modules/auth/services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-auth-page',
@@ -10,7 +11,10 @@ import { AuthService } from '@modules/auth/services/auth.service';
 export class AuthPageComponent implements OnInit {
   formLogin: FormGroup = new FormGroup({})
   msjErrorSesion: Boolean= false
-  constructor(private authService: AuthService ) { }
+  constructor(
+    private authService: AuthService,
+    private cookie: CookieService
+     ) { }
 
   ngOnInit(): void {
     this.formLogin = new FormGroup(
@@ -31,7 +35,10 @@ export class AuthPageComponent implements OnInit {
     const {email, password} = this.formLogin.value;
     this.authService.sendCredentials(email, password)
     .subscribe(responseOk =>{
+      const { data,tokenSession } = responseOk;
+      this.cookie.set('tokenComponent', tokenSession, 1, '/');//Se guarda la cookie desde el comonete pero tambien se puede desde el servico 
       console.log('Sesion iniciada Correecta');
+
     },error=>{
       this.msjErrorSesion = true
       console.log('Ocurrio un error con usuario y/o pasword');
