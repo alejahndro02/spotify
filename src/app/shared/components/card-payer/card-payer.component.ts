@@ -15,6 +15,6 @@ export class CardPayerComponent implements OnInit {
   ngOnInit(): void {
   }
   sendPlayer(track:TrackModel):void{
-    this.multimediaService.callbackMediaPlayer.emit(track);
+    this.multimediaService.trackInfo$.next(track);
   }
 }
