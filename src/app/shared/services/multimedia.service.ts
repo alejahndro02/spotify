@@ -21,7 +21,7 @@ this.trackInfo$.subscribe(responseOK =>{
   this.listenAllEventAudio();
 })
 }
-  //fuciones Privadas
+  //funciones Privadas
   private listenAllEventAudio():void{
     this.audio.addEventListener('timeupdate',this.calculateTime, false)
   }
@@ -49,7 +49,7 @@ this.trackInfo$.subscribe(responseOK =>{
     const displayFormat= `-${displayMinutes} : ${displaySeconds}`
     this.timeRemaining$.next(displayFormat);
   }
-  //funcioiin Publica
+  //funcion Publica
   public setAudio(track:TrackModel):void{
     console.log(':):):):', track);
     this.audio.src = track.url;
