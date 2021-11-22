@@ -12,8 +12,7 @@ export class MultimediaService {
   public timeElapsed$: BehaviorSubject<string> = new BehaviorSubject('00 : 00');
   public timeRemaining$: BehaviorSubject<string> = new BehaviorSubject('-00 : 00');
   public playerStatus$: BehaviorSubject<string> = new BehaviorSubject('paused');
-
-
+  public progressBarPlayer$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor() {
 this.trackInfo$.subscribe(responseOK =>{
@@ -31,17 +30,16 @@ this.trackInfo$.subscribe(responseOK =>{
     this.audio.addEventListener('play',this.setPlayerStatus, false)
     this.audio.addEventListener('pause',this.setPlayerStatus, false)
     this.audio.addEventListener('ended',this.setPlayerStatus, false)
-
-
   }
 
-  private calculateTime= ()=>{
+  private calculateTime = ()=>{
     const { duration, currentTime }= this.audio;
     this.setTimeElapsed(currentTime);
     this.setTimeRemaining(currentTime, duration);
+    this.setPercentageProgressBar(currentTime, duration)
+
   }
   private setPlayerStatus=(state:any)=>{
-    console.log(state);
     switch (state.type) {
       case 'play':
         this.playerStatus$.next('play');
@@ -75,6 +73,11 @@ this.trackInfo$.subscribe(responseOK =>{
     const displayMinutes = (minutes < 10) ? `0 ${minutes}` : minutes;
     const displayFormat= `-${displayMinutes} : ${displaySeconds}`
     this.timeRemaining$.next(displayFormat);
+  }
+  private setPercentageProgressBar(currentTime:number, duration:number){
+    let percentageProgressBar = (currentTime * 100) / duration;
+    this.progressBarPlayer$.next(percentageProgressBar);
+    
   }
   //funcion Publica
   public setAudio(track:TrackModel):void{
