@@ -87,4 +87,9 @@ this.trackInfo$.subscribe(responseOK =>{
   public togglePlayer():void{
     (this.audio.paused) ? this.audio.play() : this.audio.pause();
   }
+  public seekAudio(percentage:number):void{
+    const { duration }= this.audio;
+    const  percentageSecond = (percentage * duration) / 100;
+    this.audio.currentTime = percentageSecond;
+  }
 }
